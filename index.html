@@ -22,10 +22,42 @@ button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:10px 14px
 .acoes{display:flex;gap:8px;flex-wrap:wrap}.acoes button{flex:1}#aviso{min-height:24px;color:var(--v);font-size:14px;margin:12px 0}
 footer{text-align:center;color:#63786c;padding:22px 12px 8px;font-size:14px}
 @media(max-width:480px){header{padding:30px 16px 25px}.dia,.cartao{padding:16px}}
+
+.form-inscricao{display:grid;gap:8px;max-width:620px}.form-inscricao label{font-weight:bold;margin-top:5px}.form-inscricao input:not([type=checkbox]),.form-inscricao select{width:100%;padding:12px;border:1px solid #bdcfc2;border-radius:10px;font:inherit;background:#fff;color:var(--txt)}.form-inscricao .consentimento{display:flex;gap:10px;align-items:flex-start;font-weight:normal;margin:12px 0}.form-inscricao .consentimento input{margin-top:6px;flex-shrink:0}.form-inscricao button{margin-top:8px}.nota-form{font-size:13px;color:#63786c}.form-inscricao #ins-status{margin:8px 0 0;font-weight:bold;white-space:pre-line}
 </style></head>
 <body>
 <header><h1>🌿 Mensagens de Otimismo</h1><p>Fé, amor e esperança para o seu coração.</p></header>
 <main>
+
+<section class="dia" id="cadastro-diario">
+  <span class="etiqueta">💌 RECEBA INSPIRAÇÃO TODOS OS DIAS</span>
+  <h2>Receba uma mensagem diária</h2>
+  <p>Cadastre-se para receber mensagens de otimismo e reflexões inspiradas na Bíblia. Você escolhe o canal e o horário.</p>
+  <form id="form-inscricao" class="form-inscricao">
+    <label for="ins-nome">Seu nome</label>
+    <input id="ins-nome" name="nome" type="text" maxlength="100" autocomplete="name" required placeholder="Como podemos chamar você?">
+    <label for="ins-email">E-mail</label>
+    <input id="ins-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="voce@exemplo.com">
+    <label for="ins-whatsapp">WhatsApp com DDD</label>
+    <input id="ins-whatsapp" name="whatsapp" type="tel" maxlength="25" autocomplete="tel" placeholder="(11) 99999-9999">
+    <label for="ins-canal">Como deseja receber?</label>
+    <select id="ins-canal" name="canal" required>
+      <option value="" selected disabled>Escolha uma opção</option>
+      <option value="email">Somente e-mail</option>
+      <option value="whatsapp">Somente WhatsApp</option>
+      <option value="ambos">E-mail e WhatsApp</option>
+    </select>
+    <label for="ins-horario">Horário preferido (Brasília)</label>
+    <select id="ins-horario" name="horario" required>
+      <option value="06:00">06:00</option><option value="07:00" selected>07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="12:00">12:00</option><option value="18:00">18:00</option><option value="20:00">20:00</option>
+    </select>
+    <label class="consentimento"><input id="ins-consentimento" type="checkbox" required> Autorizo o envio de mensagens diárias pelo canal escolhido. Sei que posso cancelar quando quiser.</label>
+    <button class="principal" type="submit" id="ins-enviar">Quero receber mensagens</button>
+    <p id="ins-status" role="status" aria-live="polite"></p>
+  </form>
+  <p class="nota-form">Se escolher e-mail, informe um e-mail válido. Se escolher WhatsApp, informe um número com DDD. Seus dados não serão exibidos publicamente.</p>
+</section>
+
 <section class="dia"><span class="etiqueta">✨ INSPIRAÇÃO DE HOJE</span><h2 id="titulo-dia">Um novo dia, uma nova oportunidade</h2><img id="foto-dia" class="foto-destaque" src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=80" alt="Paisagem inspiradora ao amanhecer"><p id="texto-dia">Cada amanhecer traz uma nova chance de recomeçar.</p><div class="acoes"><button class="principal" id="copiar-dia">Copiar mensagem</button><button class="secundario" id="compartilhar-dia">Compartilhar</button></div></section>
 <section><h2>Todas as mensagens</h2><p>Escolha um tema ou veja todas as mensagens para encontrar inspiração.</p>
 <nav class="filtros" aria-label="Filtrar mensagens" id="filtros">
@@ -222,4 +254,47 @@ async function compartilhar(m){if(navigator.share){try{await navigator.share({ti
 document.querySelectorAll(".filtro").forEach(b=>b.addEventListener("click",()=>{temaAtual=b.dataset.tema;document.querySelectorAll(".filtro").forEach(x=>{let ativo=x===b;x.classList.toggle("ativo",ativo);x.setAttribute("aria-pressed",String(ativo))});renderizar()}));
 const destaque=mensagens[Math.floor(Date.now()/86400000)%mensagens.length];document.getElementById("titulo-dia").textContent=destaque.titulo;document.getElementById("texto-dia").textContent=destaque.texto;document.getElementById("foto-dia").src=destaque.foto;document.getElementById("foto-dia").alt="Imagem inspiradora: "+destaque.tema;
 document.getElementById("copiar-dia").onclick=()=>copiar(completo(destaque));document.getElementById("compartilhar-dia").onclick=()=>compartilhar(destaque);renderizar();
+
+// Cadastro no Supabase: somente inserção; o site não consulta a lista de inscritos.
+const SUPABASE_URL = "https://tcpurvnobbefspzbsxqa.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_s1ilhx5yNUkQ4lSCHbeovw_rBpSa0Ql";
+const formularioInscricao = document.getElementById("form-inscricao");
+const canalInscricao = document.getElementById("ins-canal");
+const emailInscricao = document.getElementById("ins-email");
+const whatsappInscricao = document.getElementById("ins-whatsapp");
+canalInscricao.addEventListener("change", () => {
+  emailInscricao.required = canalInscricao.value === "email" || canalInscricao.value === "ambos";
+  whatsappInscricao.required = canalInscricao.value === "whatsapp" || canalInscricao.value === "ambos";
+});
+formularioInscricao.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const status = document.getElementById("ins-status");
+  const botao = document.getElementById("ins-enviar");
+  const canal = canalInscricao.value;
+  if ((canal === "email" || canal === "ambos") && !emailInscricao.value.trim()) { status.textContent = "Informe seu e-mail para receber por esse canal."; emailInscricao.focus(); return; }
+  if ((canal === "whatsapp" || canal === "ambos") && !whatsappInscricao.value.trim()) { status.textContent = "Informe seu WhatsApp com DDD para receber por esse canal."; whatsappInscricao.focus(); return; }
+  const payload = {
+    nome: document.getElementById("ins-nome").value.trim(),
+    email: emailInscricao.value.trim() || null,
+    whatsapp: whatsappInscricao.value.trim() || null,
+    canal,
+    horario: document.getElementById("ins-horario").value,
+    ativo: true
+  };
+  botao.disabled = true; status.textContent = "Enviando seu cadastro...";
+  try {
+    const resposta = await fetch(SUPABASE_URL + "/rest/v1/inscritos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_PUBLISHABLE_KEY, "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY, "Prefer": "return=minimal" },
+      body: JSON.stringify(payload)
+    });
+    if (!resposta.ok) { const detalhe = await resposta.text(); throw new Error(detalhe || "Não foi possível salvar o cadastro."); }
+    formularioInscricao.reset(); emailInscricao.required = false; whatsappInscricao.required = false;
+    status.textContent = "Cadastro recebido com sucesso! O envio automático ainda será ativado quando configurarmos os serviços de e-mail e WhatsApp.";
+  } catch (erro) {
+    console.error("Falha no cadastro:", erro);
+    status.textContent = "Não foi possível concluir o cadastro agora. Confira os dados e tente novamente. Se persistir, avise o responsável pelo site.";
+  } finally { botao.disabled = false; }
+});
+
 </script></body></html>
