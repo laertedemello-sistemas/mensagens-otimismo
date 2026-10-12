@@ -1,89 +1,65 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#174638">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#174638"><meta name="description" content="Mensagens de otimismo, fé, amor, felicidade, esperança e autoconfiança.">
 <title>Mensagens de Otimismo</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#edf5ee;color:#20352e;font-family:Arial,sans-serif}
-main{max-width:700px;margin:auto;padding:20px}
-header{background:#174638;color:white;text-align:center;padding:30px 18px;border-radius:22px}
-header h1{font-size:34px;margin:12px 0}
-header p{color:#f2d48a}
-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
-button{cursor:pointer;border:0;border-radius:12px;padding:12px;font-weight:bold}
-.tema{background:white;color:#174638;border:1px solid #c9dacd}
-.tema.ativo,.principal{background:#174638;color:white}
-article{background:#fffdf7;padding:23px;border-radius:20px;box-shadow:0 5px 20px #0001}
-h2{color:#174638}
-#texto{white-space:pre-line;line-height:1.8;font-size:17px}
-.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.acoes button{flex:1}
-.secundario{background:#e1eee3;color:#174638}
-footer{text-align:center;padding:22px;color:#567064;font-size:13px}
-</style>
-</head>
+:root{--v:#174638;--v2:#28775a;--bg:#f2f7f3;--txt:#263b32;--soft:#e5eee8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:linear-gradient(135deg,var(--v),var(--v2));color:#fff;text-align:center;padding:36px 16px 30px;border-radius:0 0 26px 26px}
+header h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 8px}header p{margin:0;color:#e1f2e8;font-size:17px}
+main{max-width:1000px;margin:auto;padding:22px 16px 38px}h2{color:var(--v);font-size:24px;margin:22px 0 10px}
+.dia,.cartao{background:#fff;border:1px solid #dce8df;border-radius:18px;box-shadow:0 6px 20px #17463810}
+.dia{padding:22px;margin-bottom:26px}.foto-destaque{width:100%;max-height:320px;object-fit:cover;border-radius:14px;margin:14px 0 16px;display:block}.foto-cartao{width:100%;height:175px;object-fit:cover;border-radius:12px;margin:0 0 14px;display:block}.foto-fallback{background:#e7f3eb}.etiqueta{display:inline-block;background:#e7f3eb;color:var(--v);font-size:12px;font-weight:bold;padding:5px 10px;border-radius:20px}
+.dia h2{margin:12px 0 8px}.dia p{font-size:18px;margin:0 0 16px;white-space:pre-line}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:10px 14px;font-weight:bold}
+.filtro{background:#fff;color:var(--v);border:1px solid #cbdcd0}.filtro.ativo,.principal{background:var(--v);color:#fff}.secundario{background:var(--soft);color:var(--v)}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.cartao{padding:18px;display:flex;flex-direction:column;min-height:220px}.categoria{font-size:12px;text-transform:uppercase;font-weight:bold;color:var(--v2);letter-spacing:.6px}
+.cartao h3{font-size:19px;line-height:1.3;color:var(--v);margin:8px 0}.cartao p{margin:0 0 18px;flex:1;white-space:pre-line}
+.acoes{display:flex;gap:8px;flex-wrap:wrap}.acoes button{flex:1}#aviso{min-height:24px;color:var(--v);font-size:14px;margin:12px 0}
+footer{text-align:center;color:#63786c;padding:22px 12px 8px;font-size:14px}
+@media(max-width:480px){header{padding:30px 16px 25px}.dia,.cartao{padding:16px}}
+</style></head>
 <body>
+<header><h1>🌿 Mensagens de Otimismo</h1><p>Fé, amor e esperança para o seu coração.</p></header>
 <main>
-<header>
-<div style="font-size:38px">🌅</div>
-<p>UMA NOVA MENSAGEM A CADA DIA</p>
-<h1>Mensagens de Otimismo</h1>
-<p>Fé, amor e esperança para o seu coração.</p>
-</header>
-
-<nav>
-<button class="tema ativo" onclick="escolher('Todos',this)">✨ Todas</button>
-<button class="tema" onclick="escolher('Deus',this)">🙏 Deus</button>
-<button class="tema" onclick="escolher('Amor',this)">❤️ Amor</button>
-<button class="tema" onclick="escolher('Felicidade',this)">😊 Felicidade</button>
-<button class="tema" onclick="escolher('Esperança',this)">🌈 Esperança</button>
-<button class="tema" onclick="escolher('Autoconfiança',this)">💪 Autoconfiança</button>
-</nav>
-
-<article>
-<p id="categoria">🌻 MENSAGEM DO DIA</p>
-<h2 id="titulo">Acredite em um novo amanhecer</h2>
-<div id="texto"></div>
-<div class="acoes">
-<button class="principal" onclick="copiar()">Copiar mensagem</button>
-<button class="secundario" onclick="compartilhar()">Compartilhar</button>
-</div>
-<p id="aviso" aria-live="polite"></p>
-</article>
-<footer>Espalhe amor, fé e boas palavras. 💚</footer>
-</main>
-
+<section class="dia"><span class="etiqueta">✨ INSPIRAÇÃO DE HOJE</span><h2 id="titulo-dia">Um novo dia, uma nova oportunidade</h2><img id="foto-dia" class="foto-destaque" src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=80" alt="Paisagem inspiradora ao amanhecer"><p id="texto-dia">Cada amanhecer traz uma nova chance de recomeçar.</p><div class="acoes"><button class="principal" id="copiar-dia">Copiar mensagem</button><button class="secundario" id="compartilhar-dia">Compartilhar</button></div></section>
+<section><h2>Todas as mensagens</h2><p>Escolha um tema ou veja todas as mensagens para encontrar inspiração.</p>
+<nav class="filtros" aria-label="Filtrar mensagens" id="filtros">
+<button class="filtro ativo" data-tema="Todos" aria-pressed="true">Todas</button><button class="filtro" data-tema="Deus" aria-pressed="false">🙏 Deus</button><button class="filtro" data-tema="Amor" aria-pressed="false">❤️ Amor</button><button class="filtro" data-tema="Felicidade" aria-pressed="false">😊 Felicidade</button><button class="filtro" data-tema="Esperança" aria-pressed="false">🌈 Esperança</button><button class="filtro" data-tema="Autoconfiança" aria-pressed="false">💪 Autoconfiança</button><button class="filtro" data-tema="Descanso" aria-pressed="false">🧘 Sábado: dia de descanso</button>
+</nav><div id="lista" class="grade"></div><p id="aviso" role="status" aria-live="polite"></p></section>
+<footer>Espalhe amor, fé e boas palavras. 💚</footer></main>
 <script>
 const mensagens=[
-{tema:"Deus",titulo:"Deus renova nossas forças 🙏",texto:"Que Deus ilumine seus passos e traga serenidade ao seu coração. Mesmo quando você não entende todos os caminhos, pode encontrar força na fé, coragem para continuar e gratidão pelas pequenas bênçãos.\n\nQue hoje não lhe faltem paz, proteção e esperança."},
-{tema:"Amor",titulo:"O amor vive nos pequenos gestos ❤️",texto:"Uma palavra carinhosa, um abraço sincero e a atenção verdadeira podem transformar um dia. Demonstre amor enquanto há tempo e valorize quem caminha ao seu lado com respeito e sinceridade.\n\nQue o carinho esteja presente nas suas atitudes e nos seus encontros."},
-{tema:"Felicidade",titulo:"A felicidade também está no simples ☀️",texto:"Nem todos os dias serão perfeitos, mas sempre podemos procurar algo bom: uma conversa, uma música, um sorriso ou a oportunidade de recomeçar.\n\nNão espere ter tudo para agradecer pela vida. Permita-se reconhecer as pequenas alegrias de hoje."},
-{tema:"Esperança",titulo:"Ainda existem dias bonitos pela frente 🌈",texto:"Um momento difícil não define a sua história inteira. Respire, respeite seu tempo e dê um passo de cada vez. Mesmo os recomeços pequenos podem abrir caminhos inesperados.\n\nGuarde espaço no coração para acreditar que coisas boas ainda podem acontecer."},
-{tema:"Autoconfiança",titulo:"Reconheça o seu próprio valor 💪",texto:"Você não precisa ser perfeito para ser capaz. Suas experiências ensinam, suas escolhas podem mudar e sua história continua sendo escrita.\n\nConfie no seu ritmo, valorize o que já superou e não permita que a opinião de outras pessoas apague sua luz."},
-{tema:"Deus",titulo:"Comece o dia com fé 🌿",texto:"Entregue a Deus suas preocupações e faça hoje o que estiver ao seu alcance com amor e honestidade. A fé pode ser um lugar de consolo e força nos momentos de incerteza.\n\nQue a paz acompanhe suas decisões e que a gratidão ilumine seu caminho."},
-{tema:"Amor",titulo:"Cuide de quem faz bem ao seu coração 🌹",texto:"As relações mais bonitas são construídas com respeito, diálogo e presença. Não espere uma data especial para dizer que alguém é importante.\n\nUm gesto sincero pode se transformar em uma lembrança que fica para sempre."},
-{tema:"Felicidade",titulo:"Você merece momentos de alegria 😊",texto:"Reserve um pouco do dia para algo que lhe faça bem. Descanse, escute sua música preferida, converse com alguém querido ou simplesmente admire o céu.\n\nCuidar da sua felicidade também é uma forma de agradecer pela vida."},
-{tema:"Esperança",titulo:"Nunca é tarde para recomeçar 🌱",texto:"O passado pode ensinar, mas não precisa decidir tudo o que virá. Você pode aprender algo novo, mudar de direção e criar novas lembranças em qualquer fase da vida.\n\nVá com calma, mas não abandone seus sonhos."},
-{tema:"Autoconfiança",titulo:"Sua história ainda tem muito a oferecer ✨",texto:"Não compare sua jornada com a de ninguém. Reconheça suas qualidades, aprenda com os erros e tenha coragem de tentar novamente.\n\nVocê tem valor hoje, exatamente enquanto continua crescendo e descobrindo novas possibilidades."}
+{foto:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80",tema:"Deus",titulo:"Deus renova nossas forças 🙏",texto:"Que Deus ilumine seus passos e traga serenidade ao seu coração. Mesmo quando você não entende todos os caminhos, confie que não está caminhando sozinho."},
+{foto:"https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80",tema:"Amor",titulo:"O amor vive nos pequenos gestos ❤️",texto:"Uma palavra carinhosa, um abraço sincero e a atenção verdadeira podem transformar um dia inteiro. Demonstre amor enquanto há tempo."},
+{foto:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80",tema:"Felicidade",titulo:"A felicidade também está no simples ☀️",texto:"Nem todos os dias serão perfeitos, mas sempre podemos procurar algo bom: uma conversa, uma música, um sorriso ou um momento de paz."},
+{foto:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",tema:"Esperança",titulo:"Ainda existem dias bonitos pela frente 🌈",texto:"Um momento difícil não define a sua história inteira. Respire, respeite seu tempo e dê um passo de cada vez. Há novas possibilidades esperando por você."},
+{foto:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=80",tema:"Autoconfiança",titulo:"Reconheça o seu próprio valor ✨",texto:"Você não precisa ser perfeito para ser capaz. Valorize suas conquistas, aprenda com os erros e confie na pessoa que está se tornando."},
+{foto:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80",tema:"Deus",titulo:"Comece o dia com fé 🌿",texto:"Entregue a Deus suas preocupações e faça hoje o que estiver ao seu alcance, com calma, coragem e honestidade. Um passo de cada vez também é caminho."},
+{foto:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",tema:"Amor",titulo:"Cuide de quem faz bem ao seu coração 🌹",texto:"As relações mais bonitas são construídas com respeito, diálogo, carinho e presença. Não espere uma data especial para demonstrar o quanto alguém importa."},
+{foto:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80",tema:"Felicidade",titulo:"Você merece momentos de alegria 😊",texto:"Reserve um pouco do dia para algo que lhe faça bem. Descanse, sorria, escute sua música preferida e reconheça as pequenas vitórias."},
+{foto:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80",tema:"Esperança",titulo:"Nunca é tarde para recomeçar 🌱",texto:"O passado pode ensinar, mas não precisa decidir todo o seu futuro. Cada novo dia oferece a oportunidade de tentar novamente."},
+{foto:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",tema:"Autoconfiança",titulo:"Sua história ainda tem muito a oferecer 🌟",texto:"Não compare sua jornada com a de ninguém. Reconheça suas qualidades, aprenda com os erros e siga em frente no seu ritmo."},
+{foto:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80",tema:"Deus",titulo:"A paz começa dentro de você 🕊️",texto:"Faça o que puder com amor e entregue o que não pode controlar. Que a fé traga serenidade para enfrentar os desafios de hoje."},
+{foto:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80",tema:"Amor",titulo:"Gentileza também é uma forma de amor 💗",texto:"Ouvir com atenção, respeitar diferenças e oferecer apoio são gestos simples que fazem o afeto crescer."},
+{foto:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=80",tema:"Felicidade",titulo:"Celebre suas pequenas vitórias 🎉",texto:"Nem toda conquista precisa ser grandiosa. Às vezes, levantar, tentar mais uma vez e continuar já é motivo para se orgulhar."},
+{foto:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",tema:"Esperança",titulo:"Depois da chuva, o céu pode se abrir ☁️",texto:"Os dias difíceis passam, mesmo quando parecem longos. Continue cuidando de si e mantenha espaço no coração para coisas boas."},
+{foto:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=80",tema:"Autoconfiança",titulo:"Você é capaz de aprender e crescer 💪",texto:"Não saber tudo agora não significa que você não conseguirá. Dê tempo ao aprendizado e reconheça cada avanço."},
+{foto:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",tema:"Descanso",titulo:"Sábado: desacelere e respire 🌿",texto:"Hoje, permita-se descansar sem culpa. Diminua o ritmo, respire fundo e aproveite os pequenos momentos de paz."},
+{foto:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80",tema:"Descanso",titulo:"Seu descanso também é importante ☕",texto:"Você não precisa resolver tudo hoje. Cuide de si, recarregue as energias e lembre-se de que uma pausa também faz parte do caminho."},
+{foto:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",tema:"Descanso",titulo:"Que seu sábado seja leve 🌞",texto:"Que o sábado traga tranquilidade, bons pensamentos e tempo para fazer aquilo que renova sua alegria. Você merece um momento de calma."}
 ];
-let temaAtual="Todos",pos=0;
-function lista(){return temaAtual==="Todos"?mensagens:mensagens.filter(m=>m.tema===temaAtual)}
-function mostrar(){
-let arr=lista();let dia=Math.floor(Date.now()/86400000);let m=arr[(dia+pos)%arr.length];
-document.getElementById("categoria").textContent="🌿 "+m.tema.toUpperCase()+" • MENSAGEM DO DIA";
-document.getElementById("titulo").textContent=m.titulo;
-document.getElementById("texto").textContent=m.texto+"\n\nQue seu dia seja cheio de paz, amor e esperança! 💚";
-document.getElementById("aviso").textContent="";
-}
-function escolher(t,b){temaAtual=t;pos=0;document.querySelectorAll(".tema").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");mostrar()}
-function mensagemCompleta(){return document.getElementById("titulo").textContent+"\n\n"+document.getElementById("texto").textContent+"\n\nMensagens de Otimismo 🌻"}
-async function copiar(){try{await navigator.clipboard.writeText(mensagemCompleta())}catch(e){let x=document.createElement("textarea");x.value=mensagemCompleta();document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()}document.getElementById("aviso").textContent="Mensagem copiada! Abra o WhatsApp e cole o texto. 💚"}
-async function compartilhar(){if(navigator.share){try{await navigator.share({title:"Mensagens de Otimismo",text:mensagemCompleta()})}catch(e){}}else{copiar()}}
-mostrar();
-</script>
-</body>
-</html>
+let temaAtual="Todos";const lista=document.getElementById("lista"),aviso=document.getElementById("aviso");
+function visiveis(){return temaAtual==="Todos"?mensagens:mensagens.filter(m=>m.tema===temaAtual)}
+function completo(m){return m.titulo+"\n\n"+m.texto+"\n\n— Mensagens de Otimismo"}
+function renderizar(){lista.innerHTML="";const itens=visiveis();itens.forEach(m=>{const c=document.createElement("article");c.className="cartao";const img=document.createElement("img");img.className="foto-cartao";img.src=m.foto;img.alt="Imagem inspiradora: "+m.tema;img.loading="lazy";img.onerror=()=>{img.style.display="none"};const cat=document.createElement("span");cat.className="categoria";cat.textContent=m.tema;const h=document.createElement("h3");h.textContent=m.titulo;const p=document.createElement("p");p.textContent=m.texto;const a=document.createElement("div");a.className="acoes";const cp=document.createElement("button");cp.className="principal";cp.textContent="Copiar";cp.onclick=()=>copiar(completo(m));const sh=document.createElement("button");sh.className="secundario";sh.textContent="Compartilhar";sh.onclick=()=>compartilhar(m);a.append(cp,sh);c.append(img,cat,h,p,a);lista.append(c)});aviso.textContent=itens.length+" mensagem(ns) exibida(s)."}
+async function copiar(t){try{await navigator.clipboard.writeText(t);aviso.textContent="Mensagem copiada! Agora você pode colar onde quiser."}catch(e){const x=document.createElement("textarea");x.value=t;document.body.append(x);x.select();const ok=document.execCommand("copy");x.remove();aviso.textContent=ok?"Mensagem copiada!":"Não foi possível copiar automaticamente."}}
+async function compartilhar(m){if(navigator.share){try{await navigator.share({title:m.titulo,text:completo(m)})}catch(e){}}else{await copiar(completo(m));aviso.textContent="Mensagem copiada. Você pode colar no WhatsApp ou em outra rede."}}
+document.querySelectorAll(".filtro").forEach(b=>b.addEventListener("click",()=>{temaAtual=b.dataset.tema;document.querySelectorAll(".filtro").forEach(x=>{let ativo=x===b;x.classList.toggle("ativo",ativo);x.setAttribute("aria-pressed",String(ativo))});renderizar()}));
+const destaque=mensagens[Math.floor(Date.now()/86400000)%mensagens.length];document.getElementById("titulo-dia").textContent=destaque.titulo;document.getElementById("texto-dia").textContent=destaque.texto;document.getElementById("foto-dia").src=destaque.foto;document.getElementById("foto-dia").alt="Imagem inspiradora: "+destaque.tema;
+document.getElementById("copiar-dia").onclick=()=>copiar(completo(destaque));document.getElementById("compartilhar-dia").onclick=()=>compartilhar(destaque);renderizar();
+</script></body></html>
