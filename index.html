@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#174638">
+<title>Mensagens de Otimismo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#edf5ee;color:#20352e;font-family:Arial,sans-serif}
+main{max-width:700px;margin:auto;padding:20px}
+header{background:#174638;color:white;text-align:center;padding:30px 18px;border-radius:22px}
+header h1{font-size:34px;margin:12px 0}
+header p{color:#f2d48a}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px;font-weight:bold}
+.tema{background:white;color:#174638;border:1px solid #c9dacd}
+.tema.ativo,.principal{background:#174638;color:white}
+article{background:#fffdf7;padding:23px;border-radius:20px;box-shadow:0 5px 20px #0001}
+h2{color:#174638}
+#texto{white-space:pre-line;line-height:1.8;font-size:17px}
+.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.acoes button{flex:1}
+.secundario{background:#e1eee3;color:#174638}
+footer{text-align:center;padding:22px;color:#567064;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div style="font-size:38px">🌅</div>
+<p>UMA NOVA MENSAGEM A CADA DIA</p>
+<h1>Mensagens de Otimismo</h1>
+<p>Fé, amor e esperança para o seu coração.</p>
+</header>
+
+<nav>
+<button class="tema ativo" onclick="escolher('Todos',this)">✨ Todas</button>
+<button class="tema" onclick="escolher('Deus',this)">🙏 Deus</button>
+<button class="tema" onclick="escolher('Amor',this)">❤️ Amor</button>
+<button class="tema" onclick="escolher('Felicidade',this)">😊 Felicidade</button>
+<button class="tema" onclick="escolher('Esperança',this)">🌈 Esperança</button>
+<button class="tema" onclick="escolher('Autoconfiança',this)">💪 Autoconfiança</button>
+</nav>
+
+<article>
+<p id="categoria">🌻 MENSAGEM DO DIA</p>
+<h2 id="titulo">Acredite em um novo amanhecer</h2>
+<div id="texto"></div>
+<div class="acoes">
+<button class="principal" onclick="copiar()">Copiar mensagem</button>
+<button class="secundario" onclick="compartilhar()">Compartilhar</button>
+</div>
+<p id="aviso" aria-live="polite"></p>
+</article>
+<footer>Espalhe amor, fé e boas palavras. 💚</footer>
+</main>
+
+<script>
+const mensagens=[
+{tema:"Deus",titulo:"Deus renova nossas forças 🙏",texto:"Que Deus ilumine seus passos e traga serenidade ao seu coração. Mesmo quando você não entende todos os caminhos, pode encontrar força na fé, coragem para continuar e gratidão pelas pequenas bênçãos.\n\nQue hoje não lhe faltem paz, proteção e esperança."},
+{tema:"Amor",titulo:"O amor vive nos pequenos gestos ❤️",texto:"Uma palavra carinhosa, um abraço sincero e a atenção verdadeira podem transformar um dia. Demonstre amor enquanto há tempo e valorize quem caminha ao seu lado com respeito e sinceridade.\n\nQue o carinho esteja presente nas suas atitudes e nos seus encontros."},
+{tema:"Felicidade",titulo:"A felicidade também está no simples ☀️",texto:"Nem todos os dias serão perfeitos, mas sempre podemos procurar algo bom: uma conversa, uma música, um sorriso ou a oportunidade de recomeçar.\n\nNão espere ter tudo para agradecer pela vida. Permita-se reconhecer as pequenas alegrias de hoje."},
+{tema:"Esperança",titulo:"Ainda existem dias bonitos pela frente 🌈",texto:"Um momento difícil não define a sua história inteira. Respire, respeite seu tempo e dê um passo de cada vez. Mesmo os recomeços pequenos podem abrir caminhos inesperados.\n\nGuarde espaço no coração para acreditar que coisas boas ainda podem acontecer."},
+{tema:"Autoconfiança",titulo:"Reconheça o seu próprio valor 💪",texto:"Você não precisa ser perfeito para ser capaz. Suas experiências ensinam, suas escolhas podem mudar e sua história continua sendo escrita.\n\nConfie no seu ritmo, valorize o que já superou e não permita que a opinião de outras pessoas apague sua luz."},
+{tema:"Deus",titulo:"Comece o dia com fé 🌿",texto:"Entregue a Deus suas preocupações e faça hoje o que estiver ao seu alcance com amor e honestidade. A fé pode ser um lugar de consolo e força nos momentos de incerteza.\n\nQue a paz acompanhe suas decisões e que a gratidão ilumine seu caminho."},
+{tema:"Amor",titulo:"Cuide de quem faz bem ao seu coração 🌹",texto:"As relações mais bonitas são construídas com respeito, diálogo e presença. Não espere uma data especial para dizer que alguém é importante.\n\nUm gesto sincero pode se transformar em uma lembrança que fica para sempre."},
+{tema:"Felicidade",titulo:"Você merece momentos de alegria 😊",texto:"Reserve um pouco do dia para algo que lhe faça bem. Descanse, escute sua música preferida, converse com alguém querido ou simplesmente admire o céu.\n\nCuidar da sua felicidade também é uma forma de agradecer pela vida."},
+{tema:"Esperança",titulo:"Nunca é tarde para recomeçar 🌱",texto:"O passado pode ensinar, mas não precisa decidir tudo o que virá. Você pode aprender algo novo, mudar de direção e criar novas lembranças em qualquer fase da vida.\n\nVá com calma, mas não abandone seus sonhos."},
+{tema:"Autoconfiança",titulo:"Sua história ainda tem muito a oferecer ✨",texto:"Não compare sua jornada com a de ninguém. Reconheça suas qualidades, aprenda com os erros e tenha coragem de tentar novamente.\n\nVocê tem valor hoje, exatamente enquanto continua crescendo e descobrindo novas possibilidades."}
+];
+let temaAtual="Todos",pos=0;
+function lista(){return temaAtual==="Todos"?mensagens:mensagens.filter(m=>m.tema===temaAtual)}
+function mostrar(){
+let arr=lista();let dia=Math.floor(Date.now()/86400000);let m=arr[(dia+pos)%arr.length];
+document.getElementById("categoria").textContent="🌿 "+m.tema.toUpperCase()+" • MENSAGEM DO DIA";
+document.getElementById("titulo").textContent=m.titulo;
+document.getElementById("texto").textContent=m.texto+"\n\nQue seu dia seja cheio de paz, amor e esperança! 💚";
+document.getElementById("aviso").textContent="";
+}
+function escolher(t,b){temaAtual=t;pos=0;document.querySelectorAll(".tema").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");mostrar()}
+function mensagemCompleta(){return document.getElementById("titulo").textContent+"\n\n"+document.getElementById("texto").textContent+"\n\nMensagens de Otimismo 🌻"}
+async function copiar(){try{await navigator.clipboard.writeText(mensagemCompleta())}catch(e){let x=document.createElement("textarea");x.value=mensagemCompleta();document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()}document.getElementById("aviso").textContent="Mensagem copiada! Abra o WhatsApp e cole o texto. 💚"}
+async function compartilhar(){if(navigator.share){try{await navigator.share({title:"Mensagens de Otimismo",text:mensagemCompleta()})}catch(e){}}else{copiar()}}
+mostrar();
+</script>
+</body>
+</html>
